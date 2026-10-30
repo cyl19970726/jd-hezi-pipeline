@@ -95,8 +95,7 @@ for (const path of files) {
   }
   const content = readFileSync(path, "utf8");
   for (const rule of secretPatterns) {
-    if (rule.test.test(content))
-      violations.push(`${path} (${rule.label})`);
+    if (rule.test.test(content)) violations.push(`${path} (${rule.label})`);
   }
 }
 
@@ -105,7 +104,5 @@ if (violations.length > 0) {
   for (const violation of violations) console.error(`- ${violation}`);
   process.exitCode = 1;
 } else {
-  console.log(
-    `Repository policy passed for ${files.length} tracked files.`,
-  );
+  console.log(`Repository policy passed for ${files.length} tracked files.`);
 }

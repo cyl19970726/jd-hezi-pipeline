@@ -15,8 +15,8 @@
     "check": "npm run build && npm test",
     "start": "node dist/cli.js",
     "demo": "tsx src/cli.ts demo",
-    "format": "prettier --write src test web docs config README.md package.json tsconfig.json .github",
-    "format:check": "prettier --check src test web docs config README.md package.json tsconfig.json .github",
+    "format": "prettier --write src test web docs config scripts README.md ROADMAP.md AGENTS.md CONTRIBUTING.md SECURITY.md package.json tsconfig.json .github",
+    "format:check": "prettier --check src test web docs config scripts README.md ROADMAP.md AGENTS.md CONTRIBUTING.md SECURITY.md package.json tsconfig.json .github",
     "workbench": "npm run build && node dist/server.js"
   },
   "dependencies": {
