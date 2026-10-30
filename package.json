@@ -1,0 +1,50 @@
+{
+  "name": "hezi-pipeline",
+  "version": "0.2.0",
+  "description": "Auditable JD-to-Hezi publishing with Ego Browser, durable identities and read-back verification",
+  "type": "module",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "bin": {
+    "hezi": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "tsx --test test/*.test.ts",
+    "check": "npm run build && npm test",
+    "start": "node dist/cli.js",
+    "demo": "tsx src/cli.ts demo",
+    "format": "prettier --write src test web docs config README.md package.json tsconfig.json .github",
+    "format:check": "prettier --check src test web docs config README.md package.json tsconfig.json .github",
+    "workbench": "npm run build && node dist/server.js"
+  },
+  "dependencies": {
+    "sharp": "^0.35.4",
+    "zod": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.1",
+    "linkedom": "^0.18.13",
+    "prettier": "^3.9.6",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyl19970726/jd-hezi-pipeline.git"
+  },
+  "homepage": "https://github.com/cyl19970726/jd-hezi-pipeline#readme",
+  "bugs": {
+    "url": "https://github.com/cyl19970726/jd-hezi-pipeline/issues"
+  },
+  "keywords": [
+    "jd",
+    "supplier",
+    "publishing",
+    "browser-automation",
+    "sqlite",
+    "typescript"
+  ]
+}

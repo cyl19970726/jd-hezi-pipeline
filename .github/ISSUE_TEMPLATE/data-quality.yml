@@ -1,0 +1,35 @@
+name: Data-quality report
+description: Report incorrect, stale, missing, or weakly sourced data without publishing private records.
+title: "data: "
+body:
+  - type: markdown
+    attributes:
+      value: Use sanitized examples only. Keep raw shop exports, orders, customer data, reports, cookies, and `.hezi/` state outside GitHub.
+  - type: textarea
+    id: rule
+    attributes:
+      label: Affected fact or invariant
+      description: Name the field, source identity, pricing rule, media mapping, or analytics definition.
+    validations:
+      required: true
+  - type: textarea
+    id: provenance
+    attributes:
+      label: Sanitized provenance
+      description: Explain where the value came from, when it was observed, and why that source is authoritative.
+    validations:
+      required: true
+  - type: textarea
+    id: mismatch
+    attributes:
+      label: Mismatch and impact
+      description: Show expected versus observed values and which decisions or writes could be affected.
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: Proposed correction and verification
+      description: Include recomputation, migration, read-back, or reconciliation requirements.
+    validations:
+      required: true

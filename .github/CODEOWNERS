@@ -1,0 +1,16 @@
+# Default review owner and repository governance.
+* @cyl19970726
+/.github/ @cyl19970726
+/AGENTS.md @cyl19970726
+/CONTRIBUTING.md @cyl19970726
+/SECURITY.md @cyl19970726
+/docs/ @cyl19970726
+/scripts/ @cyl19970726
+
+# Runtime boundaries with elevated operational or data risk.
+/src/browser/ @cyl19970726
+/src/store.ts @cyl19970726
+/src/engine.ts @cyl19970726
+/src/worker.ts @cyl19970726
+/src/server.ts @cyl19970726
+/.agents/ @cyl19970726

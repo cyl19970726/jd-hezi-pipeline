@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.hezi/
+data/
+artifacts/
+*.sqlite*
+*.db*
+.env*
+!.env.example
+*.local.json
+*.log
+.DS_Store
+coverage/
+
+# Private operational research and merchant evidence; never publish by default.
+reports/
+docs/research/

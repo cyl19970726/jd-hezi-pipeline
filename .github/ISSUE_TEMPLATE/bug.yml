@@ -1,0 +1,52 @@
+name: Bug report
+description: Report reproducible incorrect behavior without including private shop data.
+title: "bug: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Do not attach cookies, `.hezi/`, databases, customer/order data, raw reports, or private research. Replace shop, SKU, item, and account identifiers with safe examples.
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Observed behavior
+      description: What happened, and at which command or workflow step?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Include sanitized inputs and exact steps. Say whether any external write was attempted.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+    validations:
+      required: true
+  - type: dropdown
+    id: data_risk
+    attributes:
+      label: Data and write risk
+      options:
+        - Local or simulated only
+        - Read-only external access
+        - Draft or other external write
+        - Unknown outcome or reconciliation involved
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+      description: Provide the smallest useful error, test output, or event sequence with secrets and business identifiers removed.
+    validations:
+      required: true

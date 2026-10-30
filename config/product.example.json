@@ -1,0 +1,64 @@
+{
+  "sku": "100000000001",
+  "variant": "",
+  "url": "https://item.jd.com/100000000001.html",
+  "title": {
+    "value": "示例品牌 500g袋装",
+    "sourceUrl": "https://item.jd.com/100000000001.html",
+    "capturedAt": "2026-09-09T06:33:37.869Z",
+    "evidence": "合成测试数据；不是可发布商品"
+  },
+  "price": {
+    "value": "19.90",
+    "sourceUrl": "https://item.jd.com/100000000001.html",
+    "capturedAt": "2026-09-09T06:33:37.869Z",
+    "evidence": "合成测试数据；不是可发布商品"
+  },
+  "specs": {
+    "总净含量": {
+      "value": "500g",
+      "sourceUrl": "https://item.jd.com/100000000001.html",
+      "capturedAt": "2026-09-09T06:33:37.869Z",
+      "evidence": "合成测试数据；不是可发布商品"
+    }
+  },
+  "assets": [
+    {
+      "role": "main",
+      "order": 0,
+      "url": "https://img10.360buyimg.com/example-0.jpg",
+      "path": "/synthetic/0.jpg",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "role": "main",
+      "order": 1,
+      "url": "https://img10.360buyimg.com/example-1.jpg",
+      "path": "/synthetic/1.jpg",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "role": "main",
+      "order": 2,
+      "url": "https://img10.360buyimg.com/example-2.jpg",
+      "path": "/synthetic/2.jpg",
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "role": "detail",
+      "order": 0,
+      "url": "https://img10.360buyimg.com/example-3.jpg",
+      "path": "/synthetic/3.jpg",
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "width": 800,
+      "height": 800
+    }
+  ],
+  "capturedAt": "2026-09-09T06:33:37.869Z"
+}

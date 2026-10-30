@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>JD Pipeline · 机会执行台</title>
+    <link rel="stylesheet" href="/analytics.css" />
+    <link rel="stylesheet" href="/opportunity-execution.css" />
+    <script type="module" src="/opportunity-execution.js"></script>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="/analytics#overview"
+        >JD Pipeline<span>机会执行</span></a
+      >
+      <nav aria-label="执行台导航">
+        <a class="nav-item" href="/analytics#opportunities"
+          ><span>01</span>商品机会池</a
+        >
+        <a class="nav-item active" href="#execution"
+          ><span>02</span>机会执行台</a
+        >
+      </nav>
+      <div class="sidebar-foot">
+        <span id="browser-dot" class="signal" aria-hidden="true"></span>
+        <span id="browser-status">正在检查浏览器状态…</span>
+        <a class="workbench-link" href="/">打开上架工作台 ↗</a>
+      </div>
+    </aside>
+    <main id="execution">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">JD Pipeline / 经营分析 / 商品机会池 / 执行</p>
+          <h1>机会执行台</h1>
+          <p class="subtitle">
+            围绕已选机会推进；每一步都以工作台返回的事实为准。
+          </p>
+        </div>
+        <div class="identity-card">
+          <span>当前范围</span><strong id="scope-count">正在读取…</strong
+          ><button
+            id="refresh"
+            class="icon-button"
+            type="button"
+            aria-label="刷新"
+          >
+            ↻
+          </button>
+        </div>
+      </header>
+      <div
+        id="notice"
+        class="notice"
+        role="status"
+        aria-live="polite"
+        hidden
+      ></div>
+      <section class="phase-panel" aria-labelledby="phase-title">
+        <div>
+          <p class="kicker">执行路径</p>
+          <h2 id="phase-title">从机会到可核验结果</h2>
+        </div>
+        <ol class="phase-flow">
+          <li>机会回执</li>
+          <li>SKU 匹配</li>
+          <li>授权 / 类目</li>
+          <li>价格 / 去重</li>
+          <li>提交</li>
+          <li>状态回读</li>
+        </ol>
+        <p class="meta">阶段说明用于定位当前工作；页面不推测后台进度。</p>
+      </section>
+      <section class="metric-grid" id="summary" aria-label="机会统计"></section>
+      <section class="panel cohort-panel">
+        <div class="panel-head">
+          <div>
+            <p class="kicker">已选机会</p>
+            <h2>选择要推进的机会组</h2>
+          </div>
+          <span id="result-count" class="meta"></span>
+        </div>
+        <div class="toolbar">
+          <label
+            >机会组<select id="cohort-filter">
+              <option value="">全部机会组</option>
+            </select></label
+          >
+          <label
+            >搜索<input
+              id="search"
+              type="search"
+              placeholder="商品、品牌、SKU 或状态"
+          /></label>
+          <label
+            >状态<select id="status-filter">
+              <option value="">全部状态</option>
+              <option value="IMPORTED">待采集</option>
+              <option value="PROPOSED">来源待核对</option>
+              <option value="READY">可准备</option>
+              <option value="QUEUED">准备 / 执行中</option>
+              <option value="SUBMITTED">待审核</option>
+              <option value="APPROVED">已审核</option>
+              <option value="ON_SALE">已在售</option>
+              <option value="EXISTING">已有商品</option>
+              <option value="BLOCKED">受阻</option>
+              <option value="REJECTED">已驳回</option>
+              <option value="UNKNOWN_OUTCOME">待对账</option>
+            </select></label
+          >
+          <button id="hydrate" class="secondary-button" type="button">
+            读取下一批商品详情（最多 3 条）
+          </button>
+          <button id="collect-source" class="secondary-button" type="button">
+            读取京东规格并核对（1款）
+          </button>
+          <button id="recheck" class="secondary-button" type="button">
+            重新核验已有证据
+          </button>
+          <button id="prepare" type="button" disabled>加入上架准备</button>
+        </div>
+        <p id="browser-message" class="browser-message" hidden></p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>机会</th>
+                <th>品牌 / 市场商品</th>
+                <th>目标 SKU</th>
+                <th>状态与阻塞原因</th>
+                <th>工作台</th>
+                <th><span class="sr-only">选择</span></th>
+              </tr>
+            </thead>
+            <tbody id="rows">
+              <tr>
+                <td colspan="6" class="loading">正在读取已选机会…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <button id="previous" class="secondary-button" type="button">
+            上一页</button
+          ><span id="page-label" class="meta"></span
+          ><button id="next" class="secondary-button" type="button">
+            下一页
+          </button>
+        </div>
+      </section>
+      <footer class="back-link">
+        <a href="/analytics#opportunities">← 返回商品机会池</a>
+      </footer>
+    </main>
+  </body>
+</html>

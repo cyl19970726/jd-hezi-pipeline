@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>JD Pipeline · 经营分析工作台</title>
+    <link rel="stylesheet" href="/analytics.css" />
+    <script type="module" src="/analytics.js"></script>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="#overview" aria-label="JD Pipeline经营分析首页"
+        >JD Pipeline<span>经营分析</span></a
+      >
+      <nav aria-label="经营分析导航">
+        <button class="nav-item active" data-view="overview">
+          <span>01</span>经营总览
+        </button>
+        <button class="nav-item" data-view="market">
+          <span>02</span>市场与热销
+        </button>
+        <button class="nav-item" data-view="opportunities">
+          <span>03</span>商品机会池
+        </button>
+        <button class="nav-item" data-view="brands">
+          <span>04</span>品牌 BD
+        </button>
+        <button class="nav-item" data-view="orders">
+          <span>05</span>成交与复盘
+        </button>
+        <button class="nav-item" data-view="batches">
+          <span>06</span>上架批次
+        </button>
+        <button class="nav-item" data-view="health">
+          <span>07</span>数据健康
+        </button>
+      </nav>
+      <div class="sidebar-foot">
+        <span id="source-dot" class="signal" aria-hidden="true"></span>
+        <span id="source-status">正在核对数据来源…</span>
+        <a href="/" class="workbench-link">打开上架工作台 ↗</a>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">
+            JD Pipeline / <span id="breadcrumb">经营总览</span>
+          </p>
+          <h1 id="page-title">今天先做什么？</h1>
+          <p id="page-subtitle" class="subtitle">
+            只显示有来源的信号；动作仍由现有工作台受控执行。
+          </p>
+        </div>
+        <div class="identity-card">
+          <span>当前店铺</span><strong id="shop-name">核对中…</strong>
+          <button
+            id="refresh"
+            class="icon-button"
+            type="button"
+            aria-label="刷新当前页面"
+            title="刷新"
+          >
+            ↻
+          </button>
+        </div>
+      </header>
+
+      <div
+        id="notice"
+        class="notice"
+        role="status"
+        aria-live="polite"
+        hidden
+      ></div>
+
+      <section
+        id="view-overview"
+        class="view active"
+        aria-labelledby="page-title"
+      >
+        <div id="overview-metrics" class="metric-grid loading-block"></div>
+        <div class="section-heading">
+          <div>
+            <p class="kicker">今日行动</p>
+            <h2>三件值得推进的事</h2>
+          </div>
+          <span id="overview-updated" class="meta"></span>
+        </div>
+        <div id="action-grid" class="action-grid loading-block"></div>
+        <div class="split-grid">
+          <section class="panel">
+            <div class="panel-head">
+              <div>
+                <p class="kicker">业务结果</p>
+                <h2>最近可用订单窗口</h2>
+              </div>
+              <button class="text-button" data-go="orders">查看复盘 →</button>
+            </div>
+            <div id="overview-orders"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head">
+              <div>
+                <p class="kicker">证据状态</p>
+                <h2>现在能相信什么</h2>
+              </div>
+              <button class="text-button" data-go="health">查看健康 →</button>
+            </div>
+            <div id="overview-health"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="view-market" class="view" aria-labelledby="page-title">
+        <div class="mode-tabs" role="tablist" aria-label="市场数据视图">
+          <button class="mode active" data-market-mode="recent" role="tab">
+            近期增长</button
+          ><button class="mode" data-market-mode="historical" role="tab">
+            历史累计候选
+          </button>
+        </div>
+        <p id="market-explainer" class="context-note"></p>
+        <form id="market-filters" class="filterbar">
+          <label id="market-source-field"
+            >数据来源<select name="source">
+              <option value="research">研究匹配样本</option>
+              <option value="tracked">持续跟踪数据</option>
+            </select></label
+          >
+          <label
+            >观察窗口<select name="window">
+              <option value="available">最近可用</option>
+              <option value="7">近 7 天</option>
+              <option value="30">近 30 天</option>
+              <option value="60">滚动 60 天</option>
+            </select></label
+          >
+          <label
+            >搜索<input
+              name="search"
+              type="search"
+              placeholder="商品、型号或规格"
+          /></label>
+          <label>品牌<input name="brand" placeholder="全部品牌" /></label>
+          <label>店铺<input name="shop" placeholder="全部店铺" /></label>
+          <button type="submit">筛选</button>
+        </form>
+        <div id="market-summary" class="source-strip"></div>
+        <section class="panel table-panel">
+          <div id="market-table"></div>
+          <div id="market-pagination" class="pagination"></div>
+        </section>
+      </section>
+
+      <section
+        id="view-opportunities"
+        class="view"
+        aria-labelledby="page-title"
+      >
+        <form id="opportunity-filters" class="filterbar">
+          <label
+            >搜索<input
+              name="search"
+              type="search"
+              placeholder="商品、品牌或下一动作"
+          /></label>
+          <label>品牌<input name="brand" placeholder="全部品牌" /></label>
+          <label
+            >状态<select name="status">
+              <option value="">全部状态</option>
+              <option value="open">待处理</option>
+              <option value="selected">已选中</option>
+              <option value="paused">暂缓</option>
+              <option value="completed">已完成</option>
+            </select></label
+          >
+          <label
+            >路线<select name="route">
+              <option value="">全部路线</option>
+              <option value="prepare">可准备</option>
+              <option value="bd">品牌 BD</option>
+              <option value="maintain">已有同款维护</option>
+              <option value="review">身份或证据待核</option>
+            </select></label
+          >
+          <button type="submit">筛选</button>
+        </form>
+        <div id="opportunity-summary" class="source-strip"></div>
+        <div class="transferbar" aria-label="机会转交">
+          <span class="transfer-help"
+            >选择有完整证据的机会；转交后仍需在执行台核验和准备。</span
+          >
+          <span id="opportunity-selection">已选 0 / 50</span>
+          <button id="clear-opportunity-selection" type="button" disabled>
+            清空选择
+          </button>
+          <button id="transfer-opportunities" type="button" disabled>
+            转到机会执行台
+          </button>
+        </div>
+        <p>
+          <a href="/opportunity-execution"
+            >打开机会执行台：来源、授权与上架进度</a
+          >
+        </p>
+        <section class="panel table-panel">
+          <div id="opportunity-table"></div>
+          <div id="opportunity-pagination" class="pagination"></div>
+        </section>
+      </section>
+
+      <section id="view-brands" class="view" aria-labelledby="page-title">
+        <div class="section-heading">
+          <div>
+            <p class="kicker">按品牌合并任务</p>
+            <h2>先谈能解锁更多机会的品牌</h2>
+          </div>
+        </div>
+        <div id="brand-list" class="card-list loading-block"></div>
+      </section>
+
+      <section id="view-orders" class="view" aria-labelledby="page-title">
+        <div id="order-metrics" class="metric-grid"></div>
+        <div class="split-grid order-tools">
+          <section class="panel">
+            <p class="kicker">导入</p>
+            <h2>订单 JSON</h2>
+            <p class="meta">
+              文件会先在本机检查，再提交给同源服务。订单头必须明确未分摊差额；只有核实确实没有差额时才可填写
+              0。
+            </p>
+            <a
+              class="template-link"
+              href="/api/analytics/orders/template"
+              download
+              >下载订单导入模板 ↓</a
+            >
+            <form id="order-import">
+              <label class="file-drop"
+                >选择 JSON 文件<input
+                  id="order-file"
+                  type="file"
+                  accept="application/json,.json"
+                  required
+                /><span id="order-file-name">尚未选择文件</span></label
+              ><button type="submit">检查并导入</button>
+            </form>
+          </section>
+          <section class="panel">
+            <p class="kicker">三层对账</p>
+            <h2>导入对账确认 JSON</h2>
+            <p class="meta">
+              必须明确区间、口径、预期结果与容差；接受为经营指标时还需确认人、时间和依据。
+            </p>
+            <form id="reconcile-form">
+              <label class="file-drop"
+                >选择对账 JSON 文件<input
+                  id="reconcile-file"
+                  type="file"
+                  accept="application/json,.json"
+                  required
+                /><span id="reconcile-file-name">尚未选择文件</span></label
+              ><button type="submit">检查并运行对账</button>
+            </form>
+          </section>
+        </div>
+        <section class="panel table-panel">
+          <div class="panel-head">
+            <div>
+              <p class="kicker">导入与对账记录</p>
+              <h2>订单数据状态</h2>
+            </div>
+          </div>
+          <div id="orders-table"></div>
+        </section>
+        <section class="panel goal-panel">
+          <div>
+            <p class="kicker">经营目标</p>
+            <h2>只用已确认口径计算缺口</h2>
+          </div>
+          <form id="goal-form" class="inline-form">
+            <label
+              >年度<input
+                name="year"
+                type="number"
+                min="2000"
+                step="1"
+                required
+            /></label>
+            <label
+              >年度目标（元）<input
+                name="targetAmount"
+                inputmode="decimal"
+                placeholder="例如 3000000"
+                required
+            /></label>
+            <label
+              >当前确认金额（元）<input
+                name="currentAmount"
+                inputmode="decimal"
+                placeholder="必须来自已确认口径"
+                required
+            /></label>
+            <label
+              >确认截至时间<input
+                name="asOf"
+                placeholder="2026-09-19T23:59:59+08:00"
+                required
+            /></label>
+            <label
+              >数据来源<input
+                name="source"
+                placeholder="财务报表或已接受对账编号"
+                required
+            /></label>
+            <label>确认人<input name="confirmedBy" required /></label>
+            <label
+              >确认时间<input
+                name="confirmedAt"
+                placeholder="2026-09-19T23:59:59+08:00"
+                required
+            /></label>
+            <label
+              >确认依据<input
+                name="basis"
+                placeholder="采用的营业额口径"
+                required
+            /></label>
+            <label
+              >历史背景金额（元，可选）<input
+                name="historicalContextAmount"
+                inputmode="decimal"
+            /></label>
+            <button type="submit">保存目标与确认</button>
+          </form>
+        </section>
+      </section>
+
+      <section id="view-batches" class="view" aria-labelledby="page-title">
+        <div class="section-heading">
+          <div>
+            <p class="kicker">执行回流</p>
+            <h2>从准备到在售的真实进度</h2>
+          </div>
+          <a href="/" class="button-link">打开上架工作台 ↗</a>
+        </div>
+        <div id="batch-list" class="card-list loading-block"></div>
+      </section>
+
+      <section id="view-health" class="view" aria-labelledby="page-title">
+        <div id="health-summary" class="metric-grid"></div>
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="kicker">持续采集</p>
+              <h2>商城店铺观察任务</h2>
+            </div>
+          </div>
+          <p class="meta">
+            这里只管理赫兹商城店铺列表观察；保存配置不会联系品牌或发布商品。
+          </p>
+          <div id="collection-list" class="card-list"></div>
+          <details class="collection-create">
+            <summary>新建商城店铺观察任务</summary>
+            <form id="collection-form" class="inline-form">
+              <label
+                >任务编号<input
+                  name="id"
+                  placeholder="例如 shop-watch-001"
+                  required /></label
+              ><label>赫兹商城店铺 ID<input name="shopId" required /></label
+              ><label
+                >采集间隔<select name="intervalMs">
+                  <option value="86400000">每天</option>
+                  <option value="604800000">每周</option>
+                </select></label
+              ><input
+                name="source"
+                type="hidden"
+                value="hezi-shop-list-v1"
+              /><input name="pageSize" type="hidden" value="30" /><button
+                type="submit"
+              >
+                只保存配置
+              </button>
+            </form>
+          </details>
+        </section>
+        <div id="health-list" class="card-list loading-block"></div>
+      </section>
+    </main>
+
+    <dialog id="detail-panel" class="detail-panel">
+      <div class="drawer-head">
+        <div>
+          <p class="kicker">机会详情</p>
+          <h2 id="detail-title">商品机会</h2>
+        </div>
+        <button
+          id="detail-close"
+          class="icon-button"
+          type="button"
+          aria-label="关闭详情"
+        >
+          ×
+        </button>
+      </div>
+      <div id="detail-body"></div>
+    </dialog>
+  </body>
+</html>

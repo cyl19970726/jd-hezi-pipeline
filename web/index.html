@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>JD Pipeline · 上架工作台</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <aside>
+      <div class="brand">JD Pipeline<span>商品运营</span></div>
+      <div class="nav active">上架工作台</div>
+      <a class="nav" href="/analytics">经营分析</a>
+      <div class="note">京东 → 赫兹工业品<br />本机服务 · 已登录浏览器</div>
+    </aside>
+    <main>
+      <header>
+        <div>
+          <p class="eyebrow">商品管理 / 上架任务</p>
+          <h1>上架工作台</h1>
+          <p id="shop">连接本机服务…</p>
+          <p id="pause-reason" role="status" hidden></p>
+        </div>
+        <button id="pause" class="secondary">暂停队列</button>
+      </header>
+      <section class="stats" id="stats"></section>
+      <section
+        class="tasks wave-panel"
+        id="controlled-wave"
+        aria-label="本轮扩批进度"
+        hidden
+      >
+        <div class="task-heading">
+          <h2>本轮扩批进度</h2>
+          <span id="wave-status" class="meta"></span>
+        </div>
+        <p id="wave-summary"></p>
+        <progress
+          id="wave-progress"
+          max="1"
+          value="0"
+          aria-label="本轮已核验提交进度"
+        ></progress>
+        <div id="wave-counts" class="wave-counts"></div>
+        <div id="wave-current"></div>
+        <p class="meta">
+          累计候选不会扩大目标或并发数。完成数仅计入本轮新建、已提交且核验一致的商品；历史商品不计入。
+        </p>
+      </section>
+      <section class="tasks" aria-label="批次上架预检">
+        <h2>批次上架预检</h2>
+        <p>
+          执行前集中检查资料、授权、类目字段和平台页面；检查不会保存或提交商品。
+        </p>
+        <button id="preflight" class="secondary">检查待执行任务</button>
+        <div id="preflight-result" role="status">
+          尚未检查；发布前也会自动预检。
+        </div>
+      </section>
+      <section class="tasks" aria-label="授权品牌核对">
+        <h2>授权品牌核对</h2>
+        <p id="brand-progress">尚未开始核对当前品牌库。</p>
+        <details>
+          <summary>查看品牌、有效期和类目</summary>
+          <input
+            id="brand-search"
+            type="search"
+            placeholder="搜索品牌名称"
+            aria-label="搜索授权品牌"
+          />
+          <div id="brand-inventory"></div>
+        </details>
+      </section>
+      <section class="tasks" aria-label="京东商品发现进度">
+        <h2>全品牌同步进度</h2>
+        <p id="brand-sync-summary">正在读取有效授权品牌…</p>
+        <details>
+          <summary>查看每个品牌的进度与阻断原因</summary>
+          <input
+            id="sync-search"
+            type="search"
+            placeholder="搜索品牌"
+            aria-label="搜索品牌同步进度"
+          />
+          <select id="sync-filter" aria-label="筛选品牌同步状态">
+            <option value="all">全部有效授权品牌</option>
+            <option value="not-started">尚未开始</option>
+            <option value="started">已有发现任务</option>
+            <option value="blocked">发现遇阻</option>
+          </select>
+          <div id="brand-sync-rows"></div>
+        </details>
+        <p>
+          所选店铺和分类读取完成，不代表整个品牌或所有官方店已同步完成。上架数量只统计本工作台绑定且已核验的商品。
+        </p>
+        <h2>京东商品发现</h2>
+        <div id="discovery-progress">尚未开始发现商品。</div>
+        <div id="discovery-work"></div>
+      </section>
+      <section class="tasks" aria-label="商城比价覆盖">
+        <h2>商城比价覆盖</h2>
+        <div id="market-progress">尚未开始核对商城搜索。</div>
+        <p>
+          搜索结果仅用于发现候选；售价仍需核对同款规格、在售状态和购买条件。
+        </p>
+      </section>
+      <section class="tasks" aria-label="比价审查进度">
+        <h2>比价审查进度</h2>
+        <div id="pricing-progress">尚未建立逐候选审查任务。</div>
+        <p>
+          判断和证据逐项保存。审查完成只生成价格依据；商品提交和平台审核分别记录。
+        </p>
+      </section>
+      <section class="compose">
+        <div>
+          <h2>京东采集入口</h2>
+          <p>
+            浏览器与安卓手机共用任务和访问间隔。手机支持 App
+            原图导出、商品资料与店铺核验；缺项和图片断点会保留。
+          </p>
+          <button id="android-detect" class="secondary" type="button">
+            检测安卓手机</button
+          ><select id="android-device" aria-label="已连接安卓手机"></select
+          ><button id="android-select" class="secondary" type="button">
+            使用这台手机
+          </button>
+          <p id="android-status" role="status"></p>
+          <button id="android-resume" class="secondary" type="button">
+            核验手机并恢复
+          </button>
+        </div>
+        <div>
+          <h2>添加商品</h2>
+          <p>粘贴京东商品链接，每行一条。重复链接会自动合并到已有任务。</p>
+        </div>
+        <form id="batch">
+          <label for="links">商品链接</label
+          ><textarea
+            id="links"
+            rows="4"
+            placeholder="https://item.jd.com/900000000002.html"
+            required
+          ></textarea>
+          <div class="options">
+            <label
+              >京东入口<select id="source">
+                <option value="browser">Ego 浏览器</option>
+                <option value="android">安卓京东 App（原图与资料）</option>
+              </select></label
+            >
+            <label>现有品牌<select id="brand" required></select></label
+            ><label>已适配类目<select id="category" required></select></label
+            ><label>店铺规则<select id="policy" required></select></label
+            ><label
+              >执行至<select id="through">
+                <option value="submit">提交审核</option>
+                <option value="draft">保存并核验</option>
+              </select></label
+            >
+          </div>
+          <div class="compose-footer">
+            <span
+              >新上架优先京东补贴价，缺失时用明确京东价，不等待竞品比价；有缺项保留任务。</span
+            ><button type="submit">添加到队列 →</button>
+          </div>
+        </form>
+      </section>
+      <section class="tasks">
+        <div class="task-heading">
+          <h2>任务进度 <span id="count"></span></h2>
+          <select id="filter" aria-label="筛选状态">
+            <option value="all">所有任务</option>
+            <option value="active">待执行 / 执行中</option>
+            <option value="attention">待补采 / 待核对</option>
+            <option value="DONE">已完成</option>
+          </select>
+        </div>
+        <div id="tasks"></div>
+      </section>
+      <p id="message" role="status" aria-live="polite"></p>
+    </main>
+    <dialog id="detail">
+      <div class="dialog-head">
+        <h2>任务详情</h2>
+        <button id="close" class="secondary">关闭</button>
+      </div>
+      <div id="detail-content"></div>
+    </dialog>
+  </body>
+</html>

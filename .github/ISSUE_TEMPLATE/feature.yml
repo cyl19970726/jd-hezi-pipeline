@@ -1,0 +1,43 @@
+name: Feature request
+description: Propose a scoped change with acceptance criteria and operational boundaries.
+title: "feature: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the user or operator problem and its current impact.
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: State observable behavior rather than an implementation preference.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance evidence
+      description: List the tests, read-back evidence, or manual checks that would prove this complete.
+    validations:
+      required: true
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Affected boundaries
+      options:
+        - label: Local database or schema
+        - label: Browser automation or external service
+        - label: External write, submission, or reconciliation
+        - label: UI or local analytics
+        - label: No operational boundary change
+  - type: textarea
+    id: privacy
+    attributes:
+      label: Privacy and migration notes
+      description: Identify new stored fields, migration/rollback needs, and any data that must stay local.
+    validations:
+      required: true

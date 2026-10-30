@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "rulesVersion": "demo-v1",
+  "shop": "DEMO ONLY",
+  "categoryPath": "食品>测试类目",
+  "brand": "示例品牌",
+  "unit": "件",
+  "price": {
+    "value": "19.90",
+    "sourceUrl": "https://item.jd.com/100000000001.html",
+    "capturedAt": "2026-09-09T06:33:37.869Z",
+    "evidence": "合成测试数据；不是可发布商品"
+  },
+  "inventory": "1000",
+  "shippingTemplate": "示例运费模板",
+  "fields": {
+    "model": {
+      "value": "DEMO-1",
+      "sourceUrl": "https://item.jd.com/100000000001.html",
+      "capturedAt": "2026-09-09T06:33:37.869Z",
+      "evidence": "合成测试数据；不是可发布商品"
+    }
+  },
+  "specs": {
+    "总净含量": {
+      "value": "500g",
+      "sourceUrl": "https://item.jd.com/100000000001.html",
+      "capturedAt": "2026-09-09T06:33:37.869Z",
+      "evidence": "合成测试数据；不是可发布商品"
+    },
+    "规格": {
+      "value": "单件装",
+      "sourceUrl": "https://item.jd.com/100000000001.html",
+      "capturedAt": "2026-09-09T06:33:37.869Z",
+      "evidence": "合成测试数据；不是可发布商品"
+    }
+  },
+  "mediaReviewed": false,
+  "authorization": {
+    "category": true,
+    "brandCategory": true,
+    "source": "合成测试授权",
+    "checkedAt": "2020-01-01T00:00:00.000Z"
+  }
+}
